@@ -1,0 +1,49 @@
+replacepatterns col: column10, column13, column20, column42, column44, column49 with: '' on: '\"' global: true start: '\"'
+replacepatterns col: column10, column13, column20, column42, column44, column49 with: '' on: '\"' start: ']'
+replacepatterns col: column10, column13, column20, column42, column44, column49 with: '' on: '\"'
+unnest col: column44 keys: '[0]' pluck: false markLineage: true
+drop col: column44 action: Drop
+rename type: manual mapping: [column44_0,'SKUS']
+settype col: column42 type: Array
+set col: column42 value: IFMISMATCHED($col, ['Array'], '')
+settype col: column42 type: Array
+set col: column42 value: IFMISSING($col, '[]')
+rename type: manual mapping: [column42,'REVIEWS']
+unnest col: REVIEWS keys: '[0]','[-1]' pluck: false markLineage: true
+drop col: REVIEWS action: Drop
+set col: REVIEWS_0 value: IFMISSING($col, '{}')
+set col: {REVIEWS_-1} value: IFMISSING($col, '{}')
+unnest col: column10 keys: '[0]' pluck: false markLineage: true
+drop col: column10 action: Drop
+unnest col: column13 keys: '[0]','[-1]' pluck: false markLineage: false
+drop col: column13 action: Drop
+unnest col: column20 keys: '[0]' pluck: false markLineage: true
+drop col: column20 action: Drop
+rename type: manual mapping: [column2,'ID']
+rename type: manual mapping: [column10_0,'DESCRIPTIONS']
+rename type: manual mapping: [{0},'FEATURES_1']
+rename type: manual mapping: [{-1},'FEATURES_TWO']
+settype col: column27 type: Integer
+settype col: column31 type: String
+textformat col: column32 type: uppercase
+replacepatterns col: column32 with: '' on: '\"' global: true
+settype col: column32 type: Bool
+settype col: column35 type: String
+settype col: column36 type: String
+settype col: column37 type: String
+settype col: column38 type: String
+settype col: column40 type: String
+set col: column27 value: IFMISMATCHED($col, ['Integer'], '')
+set col: column27 value: IFMISSING($col, '')
+settype col: column27 type: Integer
+set col: column27 value: IFMISSING($col, 0)
+set col: column22 value: IFMISMATCHED($col, ['Float'], '')
+set col: column22 value: IFMISSING($col, 0)
+set col: column23 value: IFMISMATCHED($col, ['Float'], '')
+set col: column23 value: IFMISSING($col, 0)
+rename type: manual mapping: [column27,'PRICECOUNT']
+settype col: column24 type: String
+settype col: column25 type: String
+set col: column32 value: IFMISMATCHED($col, ['Bool'], '')
+set col: column32 value: IFMISSING($col, '')
+rename type: manual mapping: [column32,'Priceissale']

@@ -1,0 +1,60 @@
+unnest col: DESCRIPTIONS keys: 'dateSeen','sourceURLs','value' pluck: false markLineage: true
+drop col: DESCRIPTIONS action: Drop
+replacepatterns col: DESCRIPTIONS_dateSeen,DESCRIPTIONS_sourceURLs with: '' on: '['
+replacepatterns col: DESCRIPTIONS_dateSeen,DESCRIPTIONS_sourceURLs with: '' on: ']'
+unnest col: FEATURES_1 keys: 'key','value' pluck: false markLineage: true
+unnest col: FEATURES_TWO keys: 'key','value' pluck: false markLineage: true
+drop col: FEATURES_TWO action: Drop
+replacepatterns col: FEATURES_TWO_value with: '' on: '['
+replacepatterns col: FEATURES_TWO_value with: '' on: ']'
+replacepatterns col: FEATURES_1_value with: '' on: '['
+replacepatterns col: FEATURES_1_value with: '' on: ']'
+unnest col: column20_0 keys: 'dateSeen', 'name', 'address', 'city', 'phone', 'province', 'availability', 'country', 'postalCode' pluck: false markLineage: true
+drop col: column20_0 action: Drop
+replacepatterns col: column20_0_dateSeen, column20_0_name, column20_0_address, column20_0_city, column20_0_phone, ID, column20_0_province, column8, column20_0_availability, column20_0_country, column20_0_postalCode with: '' on: '['
+replacepatterns col: column20_0_dateSeen, column20_0_name, column20_0_address, column20_0_city, column20_0_phone, ID, column20_0_province, column8, column20_0_availability, column20_0_country, column20_0_postalCode with: '' on: ']'
+unnest col: {REVIEWS_-1} keys: 'dateSeen', 'dateAdded', 'sourceURLs', 'text', 'title', 'username', 'date', 'rating', 'didPurchase', 'doRecommend', 'name' pluck: false markLineage: true
+drop col: {REVIEWS_-1} action: Drop
+unnest col: REVIEWS_0 keys: 'dateSeen', 'dateAdded', 'sourceURLs', 'text', 'title', 'username', 'date', 'rating', 'didPurchase', 'doRecommend', 'name' pluck: false markLineage: true
+drop col: REVIEWS_0 action: Drop
+replacepatterns col: REVIEWS_0_dateSeen~{REVIEWS_-1_name} with: '' on: '['
+replacepatterns col: REVIEWS_0_dateSeen~{REVIEWS_-1_name} with: '' on: ']'
+unnest col: SKUS keys: 'sourceURLs','value' pluck: false markLineage: true
+replacepatterns col: SKUS_sourceURLs with: '' on: '['
+replacepatterns col: SKUS_sourceURLs with: '' on: ']'
+set col: SKUS_value value: IFMISMATCHED($col, ['Integer'], '')
+set col: SKUS_value value: IFMISSING($col, 0)
+drop col: FEATURES_1 action: Drop
+settype col: column20_0_phone type: Integer
+set col: column20_0_phone value: IFMISSING($col, 0)
+extractpatterns type: numbers col: column20_0_postalCode
+drop col: column20_0_postalCode action: Drop
+settype col: column20_0_postalCode1 type: Integer
+set col: column20_0_postalCode1 value: IFMISSING($col, 0)
+drop col: REVIEWS_0_didPurchase action: Drop
+drop col: REVIEWS_0_rating action: Drop
+drop col: REVIEWS_0_doRecommend action: Drop
+drop col: REVIEWS_0_name action: Drop
+drop col: {REVIEWS_-1_didPurchase} action: Drop
+drop col: {REVIEWS_-1_rating} action: Drop
+drop col: {REVIEWS_-1_doRecommend} action: Drop
+drop col: {REVIEWS_-1_name} action: Drop
+drop col: SKUS action: Drop
+drop col: column49 action: Drop
+drop col: column48 action: Drop
+drop col: column47 action: Drop
+drop col: column46 action: Drop
+extractpatterns type: custom col: column43 on: /[0-9]+/ limit: 2
+drop col: column43 action: Drop
+rename type: manual mapping: [column1,'sizes1']
+rename type: manual mapping: [column2,'sizes2']
+set col: sizes1 value: IFMISSING($col, 0)
+set col: sizes2 value: IFMISSING($col, 0)
+rename type: manual mapping: [column3,'asins']
+rename type: manual mapping: [column4,'BRAND']
+rename type: manual mapping: [column5,'CATEGORIES']
+rename type: manual mapping: [column6,'COLORS']
+drop col: column7 action: Drop
+rename type: manual mapping: [column8,'DATEADDED']
+rename type: manual mapping: [column9,'DATEUPDATED']
+set col: column20_0_availability value: IFMISMATCHED($col, ['Bool'], 'No')
