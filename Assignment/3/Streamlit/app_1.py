@@ -9,7 +9,7 @@ from PIL import Image
 from io import BytesIO
 
 # Defining All the connections
-es_conn = {'host': '3.93.68.235', 'region' : 'us-east-1'}
+es_conn = {'host': '', 'region' : 'us-east-1'}
 # ElasticSearch
 def connect_elasticsearch():
     es = None
@@ -22,7 +22,7 @@ def connect_elasticsearch():
 es = connect_elasticsearch()
 
 # S3 Connections
-s3 = boto3.client('s3', aws_access_key_id = 'AKIA5BLMY5KEBY364MFN', aws_secret_access_key= '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')
+s3 = boto3.client('s3', aws_access_key_id = '', aws_secret_access_key= '')
 
 bucket_1 = 'localimagesadm'
 
