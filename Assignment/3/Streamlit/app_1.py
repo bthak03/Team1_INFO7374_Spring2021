@@ -35,7 +35,7 @@ st.title('Image Similarity App')
 my_expander = st.beta_expander('About App', expanded= False)
 
 with my_expander:
-    text = open('text/aboutapp.txt', 'r')
+    text = open('files/aboutapp.txt', 'r')
     st.write(text.read())
 
 #484, 788,1413,613
